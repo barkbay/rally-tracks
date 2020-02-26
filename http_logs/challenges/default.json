@@ -357,58 +357,6 @@
           "clients": 1
         },
         {
-          "name": "reindex",
-          "operation": {
-            "operation-type": "reindex",
-            "body": {
-              "source": {
-                "index": "logs-*"
-              },
-              "dest": {
-                "index": "reindexed-logs"
-              }
-            },
-            "request_timeout": 7200
-          },
-          "clients": 1
-        }
-      ]
-    },
-    {
-      "name": "append-no-conflicts-index-shrink",
-      "description": "Indexes the whole document corpus using Elasticsearch default settings. We only adjust the number of replicas as we benchmark a single node cluster and Rally will only start the benchmark if the cluster turns green. Document ids are unique so all index operations are append only. After indexing, same data are reindexed.",
-      "schedule": [
-        {
-          "operation": "delete-index"
-        },
-        {
-          "operation": {
-            "operation-type": "create-index",
-            "settings": {{index_settings | tojson}}
-          }
-        },
-        {
-          "name": "check-cluster-health",
-          "operation": {
-            "operation-type": "cluster-health",
-            "index": "logs-*",
-            "request-params": {
-              "wait_for_status": "{{cluster_health | default('green')}}",
-              "wait_for_no_relocating_shards": "true"
-            }
-          }
-        },
-        {
-          "operation": "index-append",
-          "warmup-time-period": 240,
-          "clients": {{bulk_indexing_clients | default(8)}}
-        },
-        {
-          "name": "refresh-after-index",
-          "operation": "refresh",
-          "clients": 1
-        },
-        {
           "operation-type": "shrink-index",
           "source-index": "logs-241998",
           "target-index": "shrunk-logs-241998",
