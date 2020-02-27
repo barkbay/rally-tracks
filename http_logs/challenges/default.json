@@ -323,7 +323,7 @@
         {
           "operation": {
             "operation-type": "create-index",
-            "settings": {{index_settings | tojson}}
+            "settings": {{index_settings | default({}) | tojson}}
           }
         },
         {
