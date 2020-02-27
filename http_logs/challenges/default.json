@@ -401,8 +401,7 @@
         {
           "operation": "index-append",
           "warmup-time-period": 240,
-          "clients": {{bulk_indexing_clients | default(16)}},
-          "bulk-size": {{bulk_size | default(20000)}}
+          "clients": {{bulk_indexing_clients | default(8)}}
         },
         {
           "name": "refresh-after-index",
