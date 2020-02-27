@@ -323,7 +323,7 @@
         {
           "operation": {
             "operation-type": "create-index",
-            "settings": {{index_settings | default({}) | tojson}}
+            "settings": {{index_settings | tojson}}
           }
         },
         {
@@ -340,7 +340,7 @@
         {
           "operation": "index-append",
           "warmup-time-period": 240,
-          "clients": {{bulk_indexing_clients | default(8)}}
+          "clients": {{bulk_indexing_clients | default(16)}}
         },
         {
           "name": "refresh-after-index",
